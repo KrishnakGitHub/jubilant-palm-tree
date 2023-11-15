@@ -6,7 +6,6 @@ class User(AbstractBaseUser, PermissionsMixin):
         ('patient', 'Patient'),
         ('doctor', 'Doctor'),
     ]
-    pass
     first_name = models.CharField(max_length=100, null=True)
     last_name = models.CharField(max_length=100, null=True)
     profile_picture = models.ImageField(upload_to='media/profile_pics', null=True, blank=True)
@@ -18,12 +17,15 @@ class User(AbstractBaseUser, PermissionsMixin):
     city = models.CharField(max_length=100)
     state = models.CharField(max_length=100)
     pincode = models.CharField(max_length=10)
+    is_active = models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
     created_on = models.DateTimeField(auto_now_add=True)
 
+    objects = UserManager()
+    
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["username"]
-
-    objects = UserManager()
 
     def __str__(self):
         return self.username
